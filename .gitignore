@@ -1,5 +1,2 @@
-
 backend/node_modules
-backend/dist
-ts/dist
 backend/.env
