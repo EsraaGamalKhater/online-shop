@@ -1,5 +1,5 @@
 
-backend API/node_modules
-backend API/dist
+backend/node_modules
+backend/dist
 ts/dist
-backend API/.env
+backend/.env
