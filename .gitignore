@@ -1,0 +1,4 @@
+backend API/node_modules
+backend API/dist
+backend API/.env
+ts/dist
