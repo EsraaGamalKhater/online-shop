@@ -1,0 +1,73 @@
+<div class="flex justify-center items-center bg-gray-100 font-sans min-h-screen p-4">
+  <div class="grid justify-center max-w-md mx-auto w-full">
+    <div>
+      <img src="https://readymadeui.com/login-image.webp" class="w-full object-cover rounded-2xl" alt="login-image" />
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login(loginForm)" class="bg-white rounded-2xl p-6 -mt-24 relative z-10 shadow-[0_2px_16px_-3px_rgba(6,81,237,0.3)]">
+      <div class="mb-12">
+        <h3 class="text-3xl font-extrabold text-[#66b2b4]">Sign in</h3>
+      </div>
+
+     
+      <div class="mb-6 relative flex items-center">
+        <input formControlName="email" class="w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none" type="email" placeholder="Enter email" required>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-[18px] h-[18px] absolute right-2" viewBox="0 0 682.667 682.667">
+          <g transform="matrix(1.33 0 0 -1.33 0 682.667)">
+            <path fill="none" stroke-miterlimit="10" stroke-width="40" d="M452 444H60c-22.091 0-40-17.909-40-40v-39.446l212.127-157.782c14.17-10.54 33.576-10.54 47.746 0L492 364.554V404c0 22.091-17.909 40-40 40Z"></path>
+            <path d="M472 274.9V107.999c0-11.027-8.972-20-20-20H60c-11.028 0-20 8.973-20 20V274.9L0 304.652V107.999c0-33.084 26.916-60 60-60h392c33.084 0 60 26.916 60 60v196.653Z"></path>
+          </g>
+        </svg>
+        <div *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched" class="text-sm mt-3">
+          <p *ngIf="loginForm.get('email')?.errors?.['required']" class="text-red-600">Email Required</p>
+          <p *ngIf="loginForm.get('email')?.errors?.['email']" class="text-red-600">Invalid Email</p>
+        </div>
+      </div>
+
+      <div class="mb-6 relative flex items-center">
+        <input 
+            formControlName="password" 
+            [type]="showPassword ? 'text' : 'password'" 
+            class="w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none" 
+            placeholder="Enter password" 
+            required
+        >
+        <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            (click)="showPassword = !showPassword" 
+            [attr.fill]="showPassword ? '#000' : '#bbb'" 
+            stroke="#bbb" 
+            class="w-[18px] h-[18px] absolute right-2 cursor-pointer" 
+            viewBox="0 0 128 128">
+            <path d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z"></path>
+        </svg>
+        <div *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched" class="text-sm mt-3">
+            <p *ngIf="loginForm.get('password')?.errors?.['required']" class="text-red-600">Password Required</p>
+            <p *ngIf="loginForm.get('password')?.errors?.['minlength'] || loginForm.get('password')?.errors?.['maxlength']" class="text-red-600">Password length 6-20</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 mt-6">
+        <div>
+          <a routerLink="/forgetPassword" class="text-[#66b2b4] text-sm font-semibold hover:underline">
+            Forgot Password?
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <button [disabled]="loginForm.invalid" class="w-full py-2.5 px-4 text-sm font-semibold tracking-wider rounded-md text-white bg-[#66b2b4] hover:bg-[#8f0f3] focus:outline-none">
+            Sign in
+        </button>
+    </div>
+    
+      
+      <div *ngIf="invalidLogin" class="text-red-600 text-center mt-4">
+        {{ invalidLogin }}
+      </div>
+
+
+      <hr class="my-6 border-gray-300">
+    </form>
+  </div>
+</div>

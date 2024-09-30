@@ -1,0 +1,106 @@
+<div *ngIf="product._id">
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-5 lg:sticky top-0">
+                <div class="main-img">
+                    <img class="img-fluid rounded-md" [src]="imgDomain + product.cover" [alt]="product.name">
+                    <div class="row my-3 previews">
+                        <div class="col-md-3 my-1" *ngFor="let image of product.images">
+                            <img class="w-full cursor-pointer rounded-md" [src]="imgDomain + image" [alt]="product.name">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="main-description px-2">
+                    <h2 class="text-2xl font-bold text-gray-800">{{ product.name }}</h2>
+                    <div class="flex flex-wrap gap-4 mt-4">
+                        <p class="new-price text-xl font-bold text-gray-800">{{ product.price | currency }}</p>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-xl font-bold text-gray-800">Sizes</h3>
+                        <div class="flex flex-wrap gap-4 mt-4">
+                            <button type="button" class="w-10 h-10 border-2 hover:border-blue-600 font-semibold text-sm rounded-full">SM</button>
+                            <button type="button" class="w-10 h-10 border-2 hover:border-blue-600 border-blue-600 font-semibold text-sm rounded-full">MD</button>
+                            <button type="button" class="w-10 h-10 border-2 hover:border-blue-600 font-semibold text-sm rounded-full">LG</button>
+                            <button type="button" class="w-10 h-10 border-2 hover:border-blue-600 font-semibold text-sm rounded-full">XL</button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="w-full mt-8 px-6 py-3 bg-[#66b2b4] hover:bg-[#3e9497] text-white text-sm font-semibold rounded-md" (click)="addToCart(product._id)">Add to Cart</button>
+                    <button type="button" class="w-full mt-2 px-6 py-3 bg-[#66b2b4] hover:bg-[#3e9497] text-white text-sm font-semibold rounded-md" (click)="addToWishlist(product._id)">Add to Wishlist</button>
+                    
+                    <div class="product-details my-4">
+                        <h3 class="text-xl font-bold text-gray-800">About the item</h3>
+                        <p class="description">{{ product.description }}</p>
+                    </div>
+
+                    <div class="delivery my-4">
+                        <p class="font-weight-bold mb-0"><span><i class="fa-solid fa-truck"></i></span> <b>Delivery done in 3 days from date of purchase</b></p>
+                        <p class="text-secondary">Order now to get this product delivery</p>
+                    </div>
+
+                    <div class="row questions bg-light p-3">
+                        <div class="col-md-1 icon">
+                            <i class="fa-brands fa-rocketchat questions-icon"></i>
+                        </div>
+                        <div class="col-md-11 text">
+                            Have a question about our products? Feel free to contact our representatives via live chat or email.
+                        </div>
+                    </div>
+
+                    <hr class="m-5">
+
+                    <div name="reviews">
+                        <form [formGroup]="reviewForm" (ngSubmit)="addReview(product._id!, reviewForm)">
+                            <div class="form-floating">
+                                <textarea class="form-control" formControlName="comment" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">Review</label>
+                            </div>
+                            <div class="mt-3 text-danger" *ngIf="reviewError !== ''">
+                                <label for="">{{ reviewError }}</label>
+                            </div>
+                            
+                            <div class="rating d-flex justify-content-center">
+                                <input type="radio" formControlName="rate" id="star5" name="rate" value="5" />
+                                <label class="star" for="star5" title="Awesome">★</label>
+                                <input type="radio" formControlName="rate" id="star4" name="rate" value="4" />
+                                <label class="star" for="star4" title="Great">★</label>
+                                <input type="radio" formControlName="rate" id="star3" name="rate" value="3" />
+                                <label class="star" for="star3" title="Very good">★</label>
+                                <input type="radio" formControlName="rate" id="star2" name="rate" value="2" />
+                                <label class="star" for="star2" title="Good">★</label>
+                                <input type="radio" formControlName="rate" id="star1" name="rate" value="1" />
+                                <label class="star" for="star1" title="Bad">★</label>
+                            </div>
+                            
+                            <button [disabled]="reviewForm.invalid" class="btn btn-success shadow mt-2 mx-auto d-block">Add Review</button>
+                            
+                            
+                            
+                        </form>
+                    </div>
+
+                    <div class="container">
+                        <hr class="my-3">
+                        <h2 class="text-center">Product Reviews</h2>
+                        <hr class="my-3">
+                        <div *ngFor="let review of product.reviews">
+                            <div>
+                                <h4>{{ review?.user?.name }}</h4>
+                                <p>{{ review?.comment }} - {{ review?.rate }}&star;</p>
+                                <p>{{ review?.createdAt | date }}</p>
+                                <hr class="my-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!product._id">
+    <h1 class="text-danger text-center m-5 p-5">Product Not Found</h1>
+</div>

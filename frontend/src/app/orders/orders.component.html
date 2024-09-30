@@ -1,0 +1,55 @@
+<div *ngIf="orders.length > 0" class="container">
+    <h2 class="text-center my-5">My Orders</h2>
+    <hr class="my-3">
+    <table class="w-100">
+      <thead>
+        <tr class="border-bottom">
+          <th>Products</th>
+          <th>Delivered</th>
+          <th>Paid</th>
+          <th>Payment Method</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders;" class="m-5 border-bottom">
+          <td>
+            <div *ngFor="let item of order.items;">
+              <img class="mx-3" width="50px" [src]="productImage + item?.product?.cover" 
+                [alt]="item?.product?.name">{{ item?.product?.name }} | Quantity: {{ item.quantity }}
+              <br><br>
+            </div>
+          </td>
+          <td>{{ order.isDelivered ? 'Yes' : 'No' }}</td>
+          <td>{{ order.isPaid ? 'Yes' : 'No' }}</td>
+          <td>{{ order.paymentMethod }}</td>
+          <td>{{ order.totalPrice | currency: 'EUR' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div *ngIf="orders.length === 0" class="container text-center my-5">
+    <p>No orders found.</p>
+  </div>
+  
+  <div class="container m-auto mt-5 w-25">
+    <ul class="pagination">
+      <li (click)="changePage(1)" class="page-item">
+        <button class="page-link">First</button>
+      </li>
+      <li *ngIf="pagination.prev" (click)="changePage(pagination.prev)" class="page-item">
+        <button class="page-link">{{ pagination.prev }}</button>
+      </li>
+      <li class="page-item">
+        <button disabled class="page-link">{{ pagination.currentPage }}</button>
+      </li>
+      <li *ngIf="pagination.next" (click)="changePage(pagination.next)" class="page-item">
+        <button class="page-link">{{ pagination.next }}</button>
+      </li>
+      <li (click)="changePage(pagination.totalPages!)" class="page-item">
+        <button class="page-link">Last</button>
+      </li>
+    </ul>
+  </div>
+  

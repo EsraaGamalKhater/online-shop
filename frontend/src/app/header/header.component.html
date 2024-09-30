@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<nav class="bg-[#66b2b4] border-b py-3">
+  <div class="container mx-auto flex justify-between items-center">
+    <a class="text-lg font-semibold text-gray-700">Online Shop</a>
+    
+    <button class="text-gray-600 md:hidden" type="button" aria-label="Toggle navigation" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+      </svg>
+    </button>
+    
+    <div class="hidden md:flex items-center space-x-6">
+      <ul class="flex space-x-4">
+        <li>
+          <a class="text-gray-700 hover:text-blue-600" routerLink='home' routerLinkActive="font-semibold text-blue-600" ariaCurrentWhenActive="page">Home</a>
+        </li>
+        <li>
+          <a class="text-gray-700 hover:text-blue-600" routerLink='products' routerLinkActive="font-semibold text-blue-600" ariaCurrentWhenActive="page">Products</a>
+        </li>
+      </ul>
+      
+      <ul class="flex space-x-6 items-center">
+        <!-- Show this block if the user is NOT logged in -->
+        <li *ngIf="!isLogin">
+          <a class="text-gray-700 hover:text-blue-600" routerLink="login">Login</a>
+        </li>
+        <li *ngIf="!isLogin">
+          <a class="text-gray-700 hover:text-blue-600" routerLink="signup">Signup</a>
+        </li>
+
+        <!-- Show this block if the user is logged in -->
+        <li class="relative" *ngIf="isLogin" (mouseleave)="dropdownOpen = false">
+          <a class="text-gray-700 hover:text-blue-600 cursor-pointer" (click)="toggleDropdown()">
+            User Settings
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+          <ul *ngIf="dropdownOpen" class="absolute bg-white border shadow-lg mt-2 rounded-lg w-48">
+            <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="profile">Profile</a></li>
+            <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="myOrders">My Orders</a></li>
+            <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="myReviews">My Reviews</a></li>
+            <li>
+              <button class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" (click)="logout()">Logout</button>
+            </li>
+          </ul>
+        </li>
+        
+        <!-- Cart Icon -->
+        <li *ngIf="isLogin">
+          <a class="text-gray-700 hover:text-blue-600" routerLink="cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </a>
+        </li>
+        
+        <!-- Wishlist Icon -->
+        <li *ngIf="isLogin">
+          <a class="text-gray-700 hover:text-blue-600" routerLink="wishlist">
+            <i class="fa-regular fa-heart"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="navbarSupportedContent" class="md:hidden">
+    <ul class="flex flex-col space-y-4 p-4">
+      <li>
+        <a class="text-gray-700 hover:text-blue-600" routerLink='home' routerLinkActive="font-semibold text-blue-600" ariaCurrentWhenActive="page">Home</a>
+      </li>
+      <li>
+        <a class="text-gray-700 hover:text-blue-600" routerLink='products' routerLinkActive="font-semibold text-blue-600" ariaCurrentWhenActive="page">Products</a>
+      </li>
+
+      <!-- Show this block if the user is NOT logged in -->
+      <li *ngIf="!isLogin">
+        <a class="text-gray-700 hover:text-blue-600" routerLink="login">Login</a>
+      </li>
+      <li *ngIf="!isLogin">
+        <a class="text-gray-700 hover:text-blue-600" routerLink="signup">Signup</a>
+      </li>
+
+      <!-- Show this block if the user is logged in -->
+      <li class="relative" *ngIf="isLogin">
+        <a class="text-gray-700 hover:text-blue-600">User Settings</a>
+        <ul class="bg-white border shadow-lg mt-2 rounded-lg">
+          <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="profile">Profile</a></li>
+          <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="myOrders">My Orders</a></li>
+          <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="myReviews">My Reviews</a></li>
+          <li>
+            <button class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" (click)="logout()">Logout</button>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

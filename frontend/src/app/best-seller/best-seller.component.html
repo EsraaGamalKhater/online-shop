@@ -1,0 +1,19 @@
+
+<h1 class="text-center m-auto mt-4 p-3 bg-[#66b2b4] text-white w-25">Best Sellers</h1>
+
+<br><br>
+<div class="row m-auto container mt-4">
+  <div *ngFor="let product of products;" class="card m-2 col-4" style="width: 18rem;">
+    <img [src]="imgDomain + product.cover" class="card-img-top w-100 h-50" [alt]="product.name">
+    <div class="card-body position-relative">
+      <h5 class="card-title">{{ product?.name }}</h5>
+      <p class="card-text">{{ product?.description!| description: 10 }}...</p>
+      <p class="card-text">Price: {{ product?.price | currency: 'EUR' }}</p>
+      <p class="card-text">{{ product?.ratingAverage | number: '1.1-1' }} &star; - Count {{ product?.ratingCount }}</p>
+      <div class="position-absolute btn-card">
+        <a [routerLink]="['/products', product._id]" class="btn btn-primary mx-2">See More</a>
+        <button (click)="addToCart(product._id!)" class="btn btn-success mx-2">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="font-[sans-serif] p-4 mx-auto lg:max-w-5xl sm:max-w-2xl max-w-md">
+    <h2 class="text-4xl font-extrabold text-[#66b2b4] mb-12">Products</h2>
+  <div>
+    <label for="search" class="visually-hidden">Search Products</label>
+    <input id="search" (keyup)="searchProducts(search.value)" #search class="form-control mx-2" type="search" placeholder="Search" aria-label="Search">
+  </div>
+</div>
+
+<div class="row m-auto container mt-4">
+  <ng-container *ngFor="let product of products;">
+    <div class="card m-2 col-md-4 col-sm-6 col-12" style="width: 18rem;">
+      <img [src]="imgDomain + product.cover" class="card-img-top w-100 h-50" [alt]="product.name">
+      <div class="card-body position-relative">
+        <h5 class="card-title">{{ product?.name }}</h5>
+        <p class="card-text">{{ product?.description! | description:10 }}</p>
+        <p class="card-text">Price: {{ product?.price | currency: 'EUR' }}</p>
+        <p class="card-text">{{ product?.ratingAverage | number: '1.1-1' }} &star; - Count {{ product?.ratingCount }}</p>
+        <div class="position-absolute btn-card">
+          <a [routerLink]="[product._id]" class="btn btn-primary mx-2">See More</a>
+          <button  (click)="addToCart(product._id!)" class="btn btn-success mx-2">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<div class="container m-auto mt-5 w-25 mb-4">
+  <ul class="pagination">
+    <li class="page-item" [class.disabled]="pagination.currentPage === 1">
+      <button (click)="changePage(1)" class="page-link" [disabled]="pagination.currentPage === 1">First</button>
+    </li>
+    <li *ngIf="pagination.prev" (click)="changePage(pagination.prev)" class="page-item">
+      <button class="page-link">{{ pagination.prev }}</button>
+    </li>
+    <li class="page-item"><button disabled class="page-link">{{ pagination.currentPage }}</button></li>
+    <li *ngIf="pagination.next" (click)="changePage(pagination.next)" class="page-item">
+      <button class="page-link">{{ pagination.next }}</button>
+    </li>
+    <li class="page-item" [class.disabled]="pagination.currentPage === pagination.totalPages">
+      <button (click)="changePage(pagination.totalPages!)" class="page-link" [disabled]="pagination.currentPage === pagination.totalPages">Last</button>
+    </li>
+  </ul>
+</div>

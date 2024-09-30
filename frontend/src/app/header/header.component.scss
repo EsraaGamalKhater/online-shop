@@ -1,0 +1,16 @@
+nav {
+    background-color: #66b2b4;
+  }
+  
+  .dropdown-menu {
+    display: none;
+  }
+  
+  .dropdown-menu.show {
+    display: block;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  

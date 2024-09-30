@@ -1,0 +1,24 @@
+import { Schema, model } from 'mongoose';
+import { Users } from '../interface/user';
+const usersSchema: Schema = new Schema<Users>({
+  name: { type: String, required: true, trim: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ['manager', 'admin', 'user'], default: 'user' },
+  image: String,
+  active: { type: Boolean, default: true },
+  phone: { type: String },
+  wishlist: [{ type: Schema.Types.ObjectId, ref: 'products' }],
+  address: [{
+    street: String,
+    city: String,
+    state: String,
+    postalCode: String
+  }],
+  resetCode: String,
+  passwordChangedAt: Date,
+  resetCodeExpireTime: Date,
+  resetCodeVerify: Boolean
+}, { timestamps: true })
+
+export default model<Users>('users', usersSchema)

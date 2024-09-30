@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid p-4" style="background-color: rgba(15, 199, 236, 0.853);"> 
+    <h5 class="text-black h4">Menu Bar</h5>
+    <span class="text-muted"></span>
+    <ul class="nav justify-content-center text-black">
+      <li class="nav-item">
+        <a class="nav-link text-black" aria-current="page" routerLink='/home' routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-black" aria-current="page" routerLink='/categories' routerLinkActive="active" ariaCurrentWhenActive="page">Categories</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-black" aria-current="page" routerLink='/subcategories' routerLinkActive="active" ariaCurrentWhenActive="page">Subcategories</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-black" aria-current="page" routerLink='/products' routerLinkActive="active" ariaCurrentWhenActive="page">Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-black" aria-current="page" routerLink='/coupons' routerLinkActive="active" ariaCurrentWhenActive="page">Coupons</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-black" aria-current="page" routerLink='/orders' routerLinkActive="active" ariaCurrentWhenActive="page">Orders</a>
+      </li>
+  
+      @if(user.role === 'manager') {
+        <li class="nav-item">
+          <a class="nav-link text-black" aria-current="page" routerLink='/users' routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
+        </li>
+      }
+      <li class="nav-item">
+        <a class="nav-link text-black" aria-current="page" routerLink='/profile' routerLinkActive="active" ariaCurrentWhenActive="page">Profile</a>
+      </li>
+      <li class="nav-item">
+        <button (click)="logout()" class="nav-link text-black" aria-current="page" routerLinkActive="active" ariaCurrentWhenActive="page">Logout</button>
+      </li>
+    </ul>
+  </div>
+</nav>
