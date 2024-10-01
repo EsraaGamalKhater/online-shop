@@ -8,4 +8,5 @@ export interface Reviews {
   product?: Products;
   user?: Users;
   createdAt?: Date;
+  isEditing?: boolean;
 }

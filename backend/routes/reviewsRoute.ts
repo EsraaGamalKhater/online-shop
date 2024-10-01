@@ -7,6 +7,8 @@ const reviewsRoute: Router = Router({ mergeParams: true })
 reviewsRoute.route('/')
   .get(filterReviews, getAllReviews)
   .post(protectRoutes, checkActive, allowedTo('user'), setProductAndUserId, createReviewValidator, createReview);
+reviewsRoute.get('/me', protectRoutes, checkActive, allowedTo('user'), filterReviews, getAllReviews)
+
 
 
 reviewsRoute.route('/:id')

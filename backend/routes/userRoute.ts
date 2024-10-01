@@ -8,7 +8,7 @@ usersRoute.use(protectRoutes, checkActive);
 usersRoute.get('/me', setUserId, getUser)
 usersRoute.put('/updateMe', uploadUserImage,resizeUserImage,updateLoggedUserValidator, updateLoggedUser)
 usersRoute.put('/changeMyPassword', changeLoggedUserPasswordValidator, changeLoggedUserPassword)
-usersRoute.delete('/deleteMe', allowedTo('user'), deleteUserValidator, setUserId, deleteUser)
+usersRoute.delete('/deleteMe', allowedTo('user'), setUserId,deleteUserValidator, deleteUser)
 
 
 usersRoute.use(allowedTo('manager'));

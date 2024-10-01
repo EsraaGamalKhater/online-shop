@@ -69,14 +69,14 @@ addReview(productId: string, formData: Reviews): Observable<any> {
 }
 
 
-  updateReview(reviewId: string, formData: Reviews): Observable<any> {
-    return this._HttpClient.put(`${this.baseUrl}${this.reviewsRoute}/${reviewId}`, formData, {
-      headers: {
-        "X-API-KEY": `${this.apiKey}`,
-        "X-CSRF-Token": `${Cookies.get('cookies')}`,
-        authorization: `Bearer ${localStorage.getItem('user')}`
-      },
-      withCredentials: true
-    });
-  }
+updateReview(reviewId: string, formData: Reviews): Observable<any> {
+  return this._HttpClient.put(`${this.baseUrl}${this.reviewsRoute}/${reviewId}`, formData, {
+    headers: {
+      "X-API-KEY": `${this.apiKey}`,
+      "X-CSRF-Token": `${Cookies.get('cookies')}`,
+      authorization: `Bearer ${localStorage.getItem('user')}`
+    },
+    withCredentials: true
+  });
+}
 }

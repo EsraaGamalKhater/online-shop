@@ -66,7 +66,21 @@ export class ProfileComponent  implements OnInit, OnDestroy{
       error: () => { }
     })
   }
-
+  deleteAccount() {
+    if (confirm('Are you sure you want to delete your account?.')) {
+      this._ProfileService.deleteUser().subscribe({
+        next: () => {
+          alert('Your account has been deleted.');
+          localStorage.removeItem('user');  
+          this._AuthService.logout(); 
+        },
+        error: () => {
+          alert('An error occurred while deleting your account.');
+        }
+      });
+    }
+  }
+  
   ngOnInit(): void {
     this._AuthService.checkToken();
     this.userImage = this._ProfileService.userImage;

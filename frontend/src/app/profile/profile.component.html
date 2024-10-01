@@ -6,7 +6,7 @@
           <!-- Profile Image Section -->
           <div class="mb-4">
             <img class="rounded-full w-36 h-36 shadow-lg transition-transform duration-300 hover:scale-110" 
-                 [src]="userImage + user.image" [alt]="user.name">
+                 [src]="userImage + user.image" >
           </div>
           <!-- User Info Section -->
           <div class="w-100 mb-4 text-center">
@@ -15,7 +15,7 @@
           </div>
           <div class="w-100 mb-4">
             <label class="form-label font-bold">Name:</label>
-            <input class="form-control border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#66b2b4] transition duration-300" 
+            <input class="form-control border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#66b2b4] transition duration-300 " 
                    type="text" placeholder="Name" (keyup)="this.username=userName.value" #userName [value]="user.name">
           </div>
           <div class="w-100 mb-4">
@@ -24,8 +24,14 @@
                    type="file" accept="image/*" (change)="getImage($event)">
           </div>
           <div class="w-100 d-grid">
-            <button (click)="updateUser()" class="d-block form-control w-75 m-auto p-3 rounded-md bg-[#66b2b4] text-white font-bold hover:bg-[#55a0a2] transition duration-300">Update Profile</button>
+            <button (click)="updateUser()" class="d-block w-75 m-auto p-3 rounded-md bg-[#66b2b4] text-white font-bold hover:bg-[#55a0a2] transition duration-300 ">Update Profile</button>
           </div>
+          <div class="w-100 d-grid mt-4">
+            <button (click)="deleteAccount()" class="d-block w-75 m-auto p-3 rounded-md bg-[#66b2b4] text-white font-bold hover:bg-[#55a0a2] transition duration-300">
+              Delete Account
+            </button>
+          </div>
+          
         </div>
       </div>
     </div>

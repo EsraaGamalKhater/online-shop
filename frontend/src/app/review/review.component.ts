@@ -4,11 +4,12 @@ import { ReviewService } from '../services/review.service';
 import { Reviews } from '../interfaces/reviews';
 import { Pagination } from '../interfaces/pagination';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl:'./review.component.html',
   styleUrls: ['./review.component.scss']
 })
@@ -33,15 +34,39 @@ export class ReviewComponent implements OnInit, OnDestroy {
   }
 
   deleteReview(reviewId: string) {
-    this._ReviewService.deleteReview(reviewId).subscribe({
-      next: (res) => {
-        this.loadReviews();
-        alert('review deleted');
-      },
-      error: (err) => { }
-    })
+    const confirmation = confirm('Are you sure you want to delete this review?');
+    
+    if (confirmation) {
+      this._ReviewService.deleteReview(reviewId).subscribe({
+        next: (res) => {
+          this.loadReviews();
+          alert('Review deleted');
+        },
+        error: (err) => { }
+      });
+    } else {
+      alert('Review deletion canceled');
+    }
   }
 
+  editReview(review: Reviews) {
+    review.isEditing = true; 
+  }
+
+  updateReview(review: Reviews) {
+    this._ReviewService.updateReview(review._id!, review).subscribe({
+      next: (res) => {
+        review.isEditing = false; 
+        alert('Review updated successfully');
+        this.loadReviews();
+      },
+      error: (err) => {
+        alert('Error updating review');
+        review.isEditing = false; 
+      }
+    });
+  }
+  
   changePage(page: number) {
     this.page = page;
     this.loadReviews();
