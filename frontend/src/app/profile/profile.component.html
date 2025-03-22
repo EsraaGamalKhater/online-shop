@@ -1,68 +1,80 @@
-<div class="container my-5">
-    <h1 class="text-center mb-5 text-[#66b2b4] lg:text-4xl text-3xl font-extrabold">Profile Information</h1>
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-8 shadow-lg p-4 rounded-3 bg-white">
-        <div class="d-flex flex-column align-items-center">
-          <!-- Profile Image Section -->
-          <div class="mb-4">
-            <img class="rounded-full w-36 h-36 shadow-lg transition-transform duration-300 hover:scale-110" 
-                 [src]="userImage + user.image" >
-          </div>
-          <!-- User Info Section -->
-          <div class="w-100 mb-4 text-center">
-            <label class="form-label font-bold">Email:</label>
-            <p class="text-muted">{{user.email}}</p>
-          </div>
-          <div class="w-100 mb-4">
-            <label class="form-label font-bold">Name:</label>
-            <input class="form-control border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#66b2b4] transition duration-300 " 
-                   type="text" placeholder="Name" (keyup)="this.username=userName.value" #userName [value]="user.name">
-          </div>
-          <div class="w-100 mb-4">
-            <label class="form-label font-bold">Change Profile Picture:</label>
-            <input class="form-control border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#66b2b4] transition duration-300" 
-                   type="file" accept="image/*" (change)="getImage($event)">
-          </div>
-          <div class="w-100 d-grid">
-            <button (click)="updateUser()" class="d-block w-75 m-auto p-3 rounded-md bg-[#66b2b4] text-white font-bold hover:bg-[#55a0a2] transition duration-300 ">Update Profile</button>
-          </div>
-          <div class="w-100 d-grid mt-4">
-            <button (click)="deleteAccount()" class="d-block w-75 m-auto p-3 rounded-md bg-[#66b2b4] text-white font-bold hover:bg-[#55a0a2] transition duration-300">
-              Delete Account
-            </button>
-          </div>
-          
-        </div>
-      </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+<div class="container my-5 d-flex">
+  <!-- Sidebar -->
+  <div class="d-flex flex-column align-items-center p-4 bg-gradient-to-b from-pink-500 to-red-500 text-white rounded-lg shadow-lg">
+    <!-- Profile -->
+    <button class="p-4 mb-3 w-full flex items-center justify-center bg-white text-pink-600 rounded-lg shadow-md transition duration-300 transform hover:scale-110 hover:bg-pink-200"
+            (click)="activeSection = 'profile'">
+      <i class="bi bi-person-fill text-4xl font-bold text-pink-600"></i>
+    </button>
+
+    <!-- Change Password -->
+    <button class="p-4 mb-3 w-full flex items-center justify-center bg-white text-pink-600 rounded-lg shadow-md transition duration-300 transform hover:scale-110 hover:bg-pink-200"
+            (click)="activeSection = 'password'">
+      <i class="bi bi-lock-fill text-4xl font-bold text-pink-600"></i>
+    </button>
+
+    <!-- Delete Account -->
+    <button (click)="deleteAccount()" class="delete-account-btn">
+      <i class="bi bi-trash-fill"></i> Delete Account
+    </button>
+    
+  </div>
+
+  <!-- Profile Section -->
+  <div *ngIf="activeSection === 'profile'" class="flex-1 p-5 bg-white shadow-lg rounded-lg mx-4">
+    <h1 class="text-center mb-5 text-pink-600 text-4xl font-extrabold tracking-wide">Profile Information</h1>
+    <div class="text-center">
+      <img class="rounded-full w-36 h-36 border-4 border-pink-600 shadow-lg transition-transform duration-300 hover:scale-110"
+      [src]="user.image ? userImage + user.image : 'https://i.imgur.com/qH6Zd7K.png'"
+      alt="Profile Picture">
+    </div>
+    <div class="mt-4">
+      <label class="form-label font-bold text-lg text-gray-700">Email:</label>
+      <p class="text-muted text-lg">{{ user.email }}</p>
+    </div>
+    <div class="mt-4">
+      <label class="form-label font-bold text-lg text-gray-700">Name:</label>
+      <input class="form-control border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#66b2b4]"
+             type="text" placeholder="Enter your name" (keyup)="this.username=userName.value" #userName [value]="user.name">
+    </div>
+    <div class="mt-4">
+      <label class="form-label font-bold text-lg text-gray-700">Change Profile Picture:</label>
+      <input class="form-control border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#66b2b4]" 
+             type="file" accept="image/*" (change)="getImage($event)">
+    </div>
+    <div class="mt-5 text-center">
+      <button (click)="updateUser()" class="w-75 p-3 rounded-lg bg-pink-600 text-white font-bold hover:bg-[#55a0a2] transition duration-300 shadow-md">
+        Update Profile
+      </button>
     </div>
   </div>
-  
+
   <!-- Change Password Section -->
-  <div class="container my-5">
-    <h1 class="text-center mb-5 text-[#66b2b4] lg:text-4xl text-3xl font-extrabold">Change Password</h1>
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-8 shadow-lg p-4 rounded-3 bg-white">
-        <form (ngSubmit)="changePassword(changePasswordForm)" class="w-100">
-          <div class="mb-4">
-            <label class="form-label font-bold">Current Password:</label>
-            <input class="form-control border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#66b2b4] transition duration-300" 
-                   formControlName="currentPassword" type="password" placeholder="Current Password">
-          </div>
-          <div class="mb-4">
-            <label class="form-label font-bold">New Password:</label>
-            <input class="form-control border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#66b2b4] transition duration-300" 
-                   formControlName="password" type="password" placeholder="New Password">
-          </div>
-          <div class="mb-4">
-            <label class="form-label font-bold">Confirm Password:</label>
-            <input class="form-control border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#66b2b4] transition duration-300" 
-                   formControlName="confirmPassword" type="password" placeholder="Confirm Password">
-          </div>
-          <div class="d-grid">
-            <button class="d-block form-control w-75 m-auto p-3 rounded-md bg-[#66b2b4] text-white font-bold hover:bg-[#55a0a2] transition duration-300">Update Password</button>
-          </div>
-        </form>
+  <div *ngIf="activeSection === 'password'" class="flex-1 p-5 bg-white shadow-lg rounded-lg mx-4">
+    <h1 class="text-center mb-5 text-pink-600 text-3xl font-extrabold tracking-wide">Change Password</h1>
+    <form (ngSubmit)="changePassword(changePasswordForm)">
+      <div class="mb-4">
+        <label class="form-label font-bold text-lg text-gray-700">Current Password:</label>
+        <input class="form-control border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#66b2b4]" 
+               formControlName="currentPassword" type="password" placeholder="Current Password">
       </div>
-    </div>
+      <div class="mb-4">
+        <label class="form-label font-bold text-lg text-gray-700">New Password:</label>
+        <input class="form-control border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#66b2b4]" 
+               formControlName="password" type="password" placeholder="New Password">
+      </div>
+      <div class="mb-4">
+        <label class="form-label font-bold text-lg text-gray-700">Confirm Password:</label>
+        <input class="form-control border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#66b2b4]" 
+               formControlName="confirmPassword" type="password" placeholder="Confirm Password">
+      </div>
+      <div class="text-center">
+        <button class="w-75 p-3 rounded-lg bg-pink-600 text-white font-bold hover:bg-[#55a0a2] transition duration-300 shadow-md">
+          Update Password
+        </button>
+      </div>
+    </form>
   </div>
-  
+</div>

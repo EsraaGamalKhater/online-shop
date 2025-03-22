@@ -10,10 +10,19 @@
       <p class="card-text">{{ product?.description!| description: 10 }}...</p>
       <p class="card-text">Price: {{ product?.price | currency: 'EUR' }}</p>
       <p class="card-text">{{ product?.ratingAverage | number: '1.1-1' }} &star; - Count {{ product?.ratingCount }}</p>
-      <div class="position-absolute btn-card">
-        <a [routerLink]="['/products', product._id]" class="btn btn-primary mx-2">See More</a>
-        <button (click)="addToCart(product._id!)" class="btn btn-success mx-2">Add to Cart</button>
+      <br>
+      <div class="position-absolute btn-card flex gap-2">
+        <a [routerLink]="['/products', product._id]" 
+           class="btn bg-[#007bff] text-white px-3 py-2 rounded-md shadow-md hover:bg-[#0056b3] transition duration-300">
+          See More
+        </a>
+      
+        <button (click)="addToCart(product._id!)" 
+                class="btn bg-[#d63384] text-white px-3 py-2 rounded-md shadow-md hover:bg-[#b82e6c] transition duration-300">
+          Add to Cart
+        </button>
       </div>
     </div>
+    <br>
   </div>
 </div>

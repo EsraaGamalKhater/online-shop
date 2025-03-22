@@ -1,36 +1,45 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-header',
-  standalone:true,
-  imports:[RouterLink,CommonModule],
-  templateUrl:'./header.component.html', 
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
   isLogin: boolean = false;
-  dropdownOpen: boolean = false;
-  constructor(private _AuthService: AuthService) {
+  sidebarOpen: boolean = false;
+
+  constructor(private _AuthService: AuthService, private router: Router) {
     this._AuthService.currentUser.subscribe({
-      
-      next: () => {
-        console.log('User logged in:', this.isLogin);
-        if (this._AuthService.currentUser.getValue() !== null) {
-          this.isLogin = true
-        } else { this.isLogin = false }
+      next: (user) => {
+        this.isLogin = !!user;
       }
-      
-    })
+    });
   }
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen; 
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
   }
-  logout() { 
+
+  closeSidebar() {
+    this.sidebarOpen = false;
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]).then(() => {
+      this.closeSidebar();
+    });
+  }
+
+  logout() {
     this._AuthService.logout();
+    this.router.navigate(['/login']).then(() => {
+      this.closeSidebar();
+    });
   }
-  
-
 }

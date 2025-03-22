@@ -16,13 +16,17 @@ export class ProfileComponent  implements OnInit, OnDestroy{
   userImage: string = '';
   userPhoto: any;
   username: string = '';
+  activeSection: string = 'profile';
+  showChangePassword: boolean = false;
   changePasswordForm = new FormGroup({
     currentPassword: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
     password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
     confirmPassword: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
   })
   constructor(private _AuthService: AuthService, private _ProfileService: ProfileService) { };
-
+  toggleSection(section: string) {
+    this.activeSection = section;
+  }
   getImage(event: any) {
     const image = event.target.files[0];
     if (image) {
@@ -35,7 +39,8 @@ export class ProfileComponent  implements OnInit, OnDestroy{
       next: (res) => {
         this.user = res.data;
       },
-      error: (err) => { }
+      error: (err) => { alert('please login first') }
+
     })
   }
 
@@ -66,6 +71,8 @@ export class ProfileComponent  implements OnInit, OnDestroy{
       error: () => { }
     })
   }
+
+  
   deleteAccount() {
     if (confirm('Are you sure you want to delete your account?.')) {
       this._ProfileService.deleteUser().subscribe({

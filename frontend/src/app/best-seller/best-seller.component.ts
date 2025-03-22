@@ -29,7 +29,7 @@ export class BestSellerComponent implements OnInit, OnDestroy{
   addToCart(productId: string) {
     this._CartService.addToCart(productId).subscribe({
       next: (res) => { alert('product added to your cart') },
-      error: (err) => { }
+      error: (err) => { alert('please login first') }
     })
   }
 

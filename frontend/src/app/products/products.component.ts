@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../services/cart.service';
 
-
 @Component({
   selector: 'app-products',
   standalone: true,
@@ -18,12 +17,13 @@ import { CartService } from '../services/cart.service';
 export class ProductsComponent implements OnInit, OnDestroy {
   subscription: any;
   products: Products[] = [];
+  filteredProducts: Products[] = []; 
   imgDomain: string = '';
   pagination: Pagination = {};
   limit: number = 16;
   page: number = 1;
   sort: string = '-createdAt';
-  search: string = '';
+  searchQuery: string = ''; 
   categories: any[] = [];
   subcategories: any[] = [];
   selectedCategory: string = '';
@@ -32,10 +32,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor(private _ProductsService: ProductsService, private _CartService: CartService) { }
 
   loadProducts() {
-    this.subscription = this._ProductsService.getAllProducts(this.limit, this.page, this.sort, this.search)
+    this.subscription = this._ProductsService.getAllProducts(this.limit, this.page, this.sort, this.searchQuery)
       .subscribe({
         next: (res) => {
           this.products = res.data;
+          this.filteredProducts = res.data; 
           this.pagination = res.pagination;
         },
         error: (err) => { console.error(err); }
@@ -48,22 +49,32 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   searchProducts(search: string) {
-    this.search = search;
-    this.loadProducts();
+    this.searchQuery = search.trim();
+    if (this.searchQuery === '') {
+      this.filteredProducts = [...this.products]; 
+    } else {
+      this.filteredProducts = this.products.filter(product =>
+        product.name && product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
   }
+  
 
   addToCart(productId: string) {
     this._CartService.addToCart(productId).subscribe({
-      next: (res) => { alert('product added to your cart') },
-      error: (err) => { }
-    })
+      next: () => { alert('Product added to your cart!'); },
+      error: (err) => { console.error(err); }
+    });
   }
+
   ngOnInit(): void {
     this.imgDomain = this._ProductsService.productImages;
     this.loadProducts();
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

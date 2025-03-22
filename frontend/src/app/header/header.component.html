@@ -1,99 +1,68 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <nav class="bg-[#66b2b4] border-b py-3">
-  <div class="container mx-auto flex justify-between items-center">
-    <a class="text-lg font-semibold text-gray-700">Online Shop</a>
-    
-    <button class="text-gray-600 md:hidden" type="button" aria-label="Toggle navigation" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-      </svg>
-    </button>
-    
+  <div class="container mx-auto flex justify-between items-center px-4">
+    <a class="text-lg font-semibold text-gray-700 cursor-pointer" (click)="navigateTo('home')">Online Shop</a>
+
     <div class="hidden md:flex items-center space-x-6">
       <ul class="flex space-x-4">
-        <li>
-          <a class="text-gray-700 hover:text-blue-600" routerLink='home' routerLinkActive="font-semibold text-blue-600" ariaCurrentWhenActive="page">Home</a>
-        </li>
-        <li>
-          <a class="text-gray-700 hover:text-blue-600" routerLink='products' routerLinkActive="font-semibold text-blue-600" ariaCurrentWhenActive="page">Products</a>
-        </li>
+        <li><a class="text-gray-700 hover:text-blue-600 cursor-pointer" (click)="navigateTo('home')">Home</a></li>
+        <li><a class="text-gray-700 hover:text-blue-600 cursor-pointer" (click)="navigateTo('products')">Products</a></li>
       </ul>
-      
+
       <ul class="flex space-x-6 items-center">
-        <!-- Show this block if the user is NOT logged in -->
         <li *ngIf="!isLogin">
-          <a class="text-gray-700 hover:text-blue-600" routerLink="login">Login</a>
+          <a class="text-gray-700 hover:text-blue-600 cursor-pointer" (click)="navigateTo('login')">Login</a>
         </li>
         <li *ngIf="!isLogin">
-          <a class="text-gray-700 hover:text-blue-600" routerLink="signup">Signup</a>
+          <a class="text-gray-700 hover:text-blue-600 cursor-pointer" (click)="navigateTo('signup')">Signup</a>
         </li>
 
-        <!-- Show this block if the user is logged in -->
-        <li class="relative" *ngIf="isLogin">
-          <a class="text-gray-700 cursor-pointer" (click)="toggleDropdown()">
-            User Settings
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </a>
-          <ul *ngIf="dropdownOpen" class="absolute bg-white border shadow-lg mt-2 rounded-lg w-48 z-50">
-            <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="profile">Profile</a></li>
-            <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="myOrders">My Orders</a></li>
-            <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="myReviews">My Reviews</a></li>
-            <li>
-              <button class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" (click)="logout()">Logout</button>
-            </li>
-          </ul>
-        </li>
-        
-        <!-- Cart Icon -->
+        <li *ngIf="isLogin"><a class="text-gray-700 hover:text-blue-600 cursor-pointer" (click)="navigateTo('cart')"><i class="fa-solid fa-cart-shopping"></i></a></li>
+        <li *ngIf="isLogin"><a class="text-gray-700 hover:text-blue-600 cursor-pointer" (click)="navigateTo('wishlist')"><i class="fa-regular fa-heart"></i></a></li>
         <li *ngIf="isLogin">
-          <a class="text-gray-700 hover:text-blue-600" routerLink="cart">
-            <i class="fa-solid fa-cart-shopping"></i>
-          </a>
-        </li>
-        
-        <!-- Wishlist Icon -->
-        <li *ngIf="isLogin">
-          <a class="text-gray-700 hover:text-blue-600" routerLink="wishlist">
-            <i class="fa-regular fa-heart"></i>
+          <a class="text-gray-700 cursor-pointer flex items-center gap-1 hover:text-blue-600" (click)="toggleSidebar()">
+            User Settings <i class="fa-solid fa-chevron-right ml-1"></i>
           </a>
         </li>
       </ul>
     </div>
-  </div>
 
-  <!-- Mobile Menu -->
-  <div id="navbarSupportedContent" class="md:hidden">
-    <ul class="flex flex-col space-y-4 p-4">
-      <li>
-        <a class="text-gray-700 hover:text-blue-600" routerLink='home' routerLinkActive="font-semibold text-blue-600" ariaCurrentWhenActive="page">Home</a>
-      </li>
-      <li>
-        <a class="text-gray-700 hover:text-blue-600" routerLink='products' routerLinkActive="font-semibold text-blue-600" ariaCurrentWhenActive="page">Products</a>
-      </li>
+    <div class="md:hidden flex items-center space-x-4">
+      <a class="text-gray-700 text-xl cursor-pointer" (click)="navigateTo('home')"><i class="fa-solid fa-house"></i></a>
+      <a class="text-gray-700 text-xl cursor-pointer" (click)="navigateTo('products')"><i class="fa-solid fa-box-open"></i></a>
 
-      <!-- Show this block if the user is NOT logged in -->
-      <li *ngIf="!isLogin">
-        <a class="text-gray-700 hover:text-blue-600" routerLink="login">Login</a>
-      </li>
-      <li *ngIf="!isLogin">
-        <a class="text-gray-700 hover:text-blue-600" routerLink="signup">Signup</a>
-      </li>
+      <a *ngIf="!isLogin" class="text-gray-700 text-xl cursor-pointer" (click)="navigateTo('login')"><i class="fa-solid fa-sign-in-alt"></i></a>
+      <a *ngIf="!isLogin" class="text-gray-700 text-xl cursor-pointer" (click)="navigateTo('signup')"><i class="fa-solid fa-user-plus"></i></a>
 
-      <!-- Show this block if the user is logged in -->
-      <li class="relative" *ngIf="isLogin">
-        <a class="text-gray-700 hover:text-blue-600">User Settings</a>
-        <ul class="bg-white border shadow-lg mt-2 rounded-lg z-50">
-          <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="profile">Profile</a></li>
-          <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="myOrders">My Orders</a></li>
-          <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" routerLink="myReviews">My Reviews</a></li>
-          <li>
-            <button class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" (click)="logout()">Logout</button>
-          </li>
-        </ul>
-      </li>
-    </ul>
+      <a *ngIf="isLogin" class="text-gray-700 text-xl cursor-pointer" (click)="navigateTo('cart')"><i class="fa-solid fa-cart-shopping"></i></a>
+      <a *ngIf="isLogin" class="text-gray-700 text-xl cursor-pointer" (click)="navigateTo('wishlist')"><i class="fa-regular fa-heart"></i></a>
+
+      <!-- تعديل هنا: إخفاء زر User Settings إذا لم يكن المستخدم مسجل دخول -->
+      <button *ngIf="isLogin" class="text-gray-700 text-2xl cursor-pointer" 
+              type="button" aria-label="Toggle navigation" 
+              (click)="toggleSidebar()">
+        <i class="fa-solid fa-user"></i>
+      </button>
+    </div>
   </div>
 </nav>
+
+<!-- Sidebar Overlay -->
+<div class="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity cursor-pointer" *ngIf="sidebarOpen" (click)="closeSidebar()"></div>
+
+<!-- Sidebar -->
+<div class="fixed right-0 top-0 h-full w-64 bg-white shadow-lg z-50 transition-transform duration-300"
+     [class.translate-x-full]="!sidebarOpen">
+  <div class="p-4 border-b flex justify-between items-center">
+    <h3 class="text-lg font-semibold text-gray-700">User Settings</h3>
+    <button class="text-gray-600 hover:text-red-600 cursor-pointer" (click)="closeSidebar()">❌</button>
+  </div>
+
+  <ul class="p-4 space-y-3">
+    <li><a class="block text-gray-700 hover:text-blue-600 py-2 cursor-pointer" (click)="navigateTo('profile')">Profile</a></li>
+    <li><a class="block text-gray-700 hover:text-blue-600 py-2 cursor-pointer" (click)="navigateTo('myOrders')">My Orders</a></li>
+    <li><a class="block text-gray-700 hover:text-blue-600 py-2 cursor-pointer" (click)="navigateTo('myReviews')">My Reviews</a></li>
+    <li><button class="w-full text-left text-red-600 hover:text-red-800 py-2 cursor-pointer" (click)="logout()">Logout</button></li>
+  </ul>
+</div>  

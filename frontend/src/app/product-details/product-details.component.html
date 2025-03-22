@@ -75,8 +75,14 @@
                                 <label class="star" for="star1" title="Bad">★</label>
                             </div>
                             
-                            <button [disabled]="reviewForm.invalid" class="btn btn-success shadow mt-2 mx-auto d-block">Add Review</button>
-                            
+                            <button [disabled]="reviewForm.invalid" 
+                            class="w-full mt-2 px-6 py-3 bg-[#66b2b4] text-white text-sm font-semibold rounded-md 
+                                   shadow transition duration-300 
+                                   hover:bg-[#3e9497] 
+                                   disabled:bg-[#a1d1d2] disabled:cursor-not-allowed disabled:opacity-70">
+                      Add Review
+                    </button>
+                    
                             
                             
                         </form>
