@@ -31,6 +31,7 @@ class features {
         }
         return this;
     }
+   
     search(modelName: string) {
         if (this.queryString.search) {
             let query: SearchQuery = {};
@@ -38,7 +39,7 @@ class features {
                 query.$or = [
                     { name: new RegExp(this.queryString.search, 'i') },
                     { description: new RegExp(this.queryString.search, 'i') },
-                    { price: new RegExp(this.queryString.search, 'i') }
+                    // { price: new RegExp(this.queryString.search, 'i') }
                 ]
             } else { query = { name: new RegExp(this.queryString.search, 'i') } }
             this.mongooseQuery = this.mongooseQuery.find(query);

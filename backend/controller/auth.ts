@@ -10,8 +10,8 @@ import sendMail from "../utils/sendMail";
 import crypto from 'crypto';
 
 export const signup = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 12);
-  req.body.password = hashedPassword;
+  // const hashedPassword = await bcrypt.hash(req.body.password, 12);
+  // req.body.password = hashedPassword;
   const user: Users = await usersModel.create(req.body);
   const token = createToken(user._id, user.role);
   res.status(201).json({ token, data: user })

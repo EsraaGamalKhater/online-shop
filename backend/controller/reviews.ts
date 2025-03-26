@@ -20,7 +20,7 @@ export const filterReviews = (req: Request, res: Response, next: NextFunction) =
   if (req.user?.role === 'user' && !req.params.productId) { 
     filterData.user = req.user._id;
   };
-  console.log("Filter Data:", filterData); 
+  // console.log("Filter Data:", filterData); 
   req.filterData = filterData;
   next();
 };
