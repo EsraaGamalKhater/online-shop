@@ -4,7 +4,10 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "start": "nodemon app.ts"
+    "start": "node dist/app.js",
+    "dev": "nodemon app.ts",
+    "build": "tsc",
+    "check": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
