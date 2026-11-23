@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
-  baseUrl: string = 'http://localhost:3000';
+  baseUrl: string = environment.apiUrl;
   authRoute: string = '/api/v1/auth';
   productsRoute: string = '/api/v1/products';
   reviewsRoute: string = '/api/v1/reviews';
@@ -14,7 +15,7 @@ export class GlobalService {
   productsImage: string = `${this.baseUrl}/images/products/`;
   usersRoute: string = '/api/v1/users';
   usersImage: string = `${this.baseUrl}/images/users/`;
-  apiKey: string = 'secret123';
+  apiKey: string = '';
   
   constructor() { }
 }
